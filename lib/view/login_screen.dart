@@ -1,5 +1,6 @@
 import 'package:demo_task/controller/login_controller.dart';
 import 'package:demo_task/view/dashboard_screen.dart';
+import 'package:demo_task/view/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   initState() {
     super.initState();
-    loadAsset();
   }
 
   loadAsset() async {
@@ -36,22 +36,22 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
+            spacing: 10,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Please login to continue.'),
-              const Center(
-                child: Image(
-                  image: AssetImage('assets/images/logo.png'),
-                  height: 400,
-                  width: 200,
+              Center(
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  height: 150,
                 ),
               ),
               Form(
-                  child: Column(
-                children: [
-                  Focus(
-                    child: TextFormField(
+                child: Column(
+                  spacing: 20,
+                  children: [
+                    TextFormField(
                       controller: loginController.username.value,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
@@ -60,12 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: 'Email',
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Focus(
-                    child: TextFormField(
+                    TextFormField(
                       controller: loginController.passcode.value,
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.go,
@@ -74,42 +69,83 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: 'Password',
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text('Forgot password? '),
+                  GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Reset here.',
+                        style: TextStyle(color: Colors.deepPurple),
+                      ))
+                ],
+              ),
+              Center(
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            15), // Adjust the radius as needed
+                      ),
+                    ),
+                    onPressed: () => Get.offAll(const DashboardScreen()),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white),
+                    )),
+              ),
+              Column(
+                spacing: 5,
+                children: [
+                  const Row(
                     children: [
-                      GestureDetector(
-                          onTap: () {}, child: const Text('Reset password'))
+                      Expanded(
+                          child: Divider(
+                        endIndent: 10,
+                        indent: 10,
+                      )),
+                      Text('Or, login using'),
+                      Expanded(
+                          child: Divider(
+                        endIndent: 10,
+                        indent: 10,
+                      )),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 5,
+                    children: [
+                      Image.asset(
+                        'assets/images/gmail.png',
+                        height: 50,
+                      ),
+                    ],
                   ),
-                  Center(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                15), // Adjust the radius as needed
-                          ),
-                        ),
-                        onPressed: () => Get.offAll(const DashboardScreen()),
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white),
-                        )),
-                  )
                 ],
-              )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text("Don't have an account yet? "),
+                  GestureDetector(
+                      onTap: () => Get.to(() => const RegistrationScreen()),
+                      child: const Text(
+                        'Sign up here.',
+                        style: TextStyle(color: Colors.deepPurple),
+                      ))
+                ],
+              ),
               const SizedBox.shrink(),
             ],
           ),

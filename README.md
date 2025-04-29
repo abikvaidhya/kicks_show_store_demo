@@ -34,7 +34,7 @@ and [Flutter](https://flutter.dev/docs/get-started/install) installed on your co
 ### Clone this repo
 
 ```
-gh repo clone abikkk/kicks_demo_task
+gh repo clone abikvaidhya/kicks_demo_task
 ```
 
 ### Navigate to the repo

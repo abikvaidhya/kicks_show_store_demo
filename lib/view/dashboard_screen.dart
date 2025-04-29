@@ -3,7 +3,6 @@ import 'package:demo_task/controller/cart_controller.dart';
 import 'package:demo_task/controller/filter_controller.dart';
 import 'package:demo_task/controller/product_controller.dart';
 import 'package:demo_task/controller/receipt_controller.dart';
-import 'package:demo_task/model/brand_model.dart';
 import 'package:demo_task/view/filter_screen.dart';
 import 'package:demo_task/view/loader_helpers.dart';
 import 'package:demo_task/view/product_screen.dart';
@@ -14,8 +13,6 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/state_manager.dart';
-
-import '../model/product_review_model.dart';
 import '../storage_helper.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -53,7 +50,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       receiptController.createNewUser(
           user: int.parse(
               (await storageHelper.get(key: constants.user)).toString()));
-      // receiptController.createNewUser();
       debugPrint(
           '## current user ID: ${await storageHelper.get(key: constants.user)}');
     }
@@ -62,7 +58,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: uiUtils.customAppBar(title: 'Discover'),
+      endDrawer: uiUtils.customAppDrawer(),
+      appBar: uiUtils.customAppBar(title: 'Discover', showAction: false),
       body: RefreshIndicator(
         onRefresh: () async {
           filterController.resetFilters();
@@ -71,40 +68,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Obx(
-              () => Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
+          child: Obx(
+            () => Column(
+              spacing: 20,
+              children: [
+                const SizedBox.shrink(),
 
-                  // brand filter
-                  brandFilterRow(),
+                // brand filter
+                brandFilterRow(),
 
-                  // product list
-                  (!productController.productsLoaded.value)
-                      ? loaders.dashboardProductLoader()
-                      : (filterController.filterCount.value > 0 &&
-                              filterController.filteredProducts.isEmpty)
-                          ? const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 40.0),
-                              child: Text('No products for such filter(s)!'),
-                            )
-                          : (filterController.filterCount.value == 0 &&
-                                  productController.products.isEmpty)
-                              ? const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 40.0),
-                                  child: Text('No products available.'),
-                                )
-                              : productList(),
+                // product list
+                (!productController.productsLoaded.value)
+                    ? loaders.dashboardProductLoader()
+                    : (filterController.filterCount.value > 0 &&
+                            filterController.filteredProducts.isEmpty)
+                        ? const Text('No products for such filter(s)!')
+                        : (filterController.filterCount.value == 0 &&
+                                productController.products.isEmpty)
+                            ? const Text('No products available.')
+                            : productList(),
 
-                  const SizedBox(
-                    height: 40,
-                  )
-                ],
-              ),
+                const SizedBox.shrink()
+              ],
             ),
           ),
         ),
@@ -191,7 +176,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   GridView productList() {
     return GridView.builder(
       primary: false,
-      padding: const EdgeInsets.symmetric(vertical: 20),
       itemCount: filterController.filteredProducts.isNotEmpty
           ? filterController.filteredProducts.length
           : productController.products.length,

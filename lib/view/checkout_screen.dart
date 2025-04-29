@@ -23,45 +23,59 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: uiUtils.customAppBar(
           title: 'Order Summary', centerTitled: true, showAction: false),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 40,
-              ),
-              const Text(
-                'Information',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-              ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              'assets/backgrounds/blue.jpg',
+            ),
+            opacity: 0.1,
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Column(
+              spacing: 20,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(),
+                const Text(
+                  'Information',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
 
-              // payment method
-              paymentSection(),
+                // payment method
+                paymentSection(),
 
-              // location detail
-              locationSection(),
+                // location detail
+                locationSection(),
 
-              // order detail
-              const Text(
-                'Order Detail',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-              ),
+                // order detail
+                const Text(
+                  'Order Detail',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
 
-              // cart section
-              cartSection(),
+                // cart section
+                cartSection(),
 
-              // order detail
-              const Text(
-                'Payment Detail',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-              ),
+                // order detail
+                const Text(
+                  'Payment Detail',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
 
-              subTotalSection(), shippingSection(), totalOrderSection(),
-            ],
+                subTotalSection(), shippingSection(), totalOrderSection(),
+                const SizedBox(
+                  height: 80,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -115,175 +129,155 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   paymentSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: const Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Payment Method',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Credit Card',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
+    return const Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Payment Method',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Credit Card',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ],
           ),
-          Icon(Icons.arrow_forward_ios)
-        ],
-      ),
+        ),
+        Icon(Icons.arrow_forward_ios)
+      ],
     );
   }
 
   locationSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: const Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Location',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Kathmandu, Nepal',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
+    return const Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Location',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Kathmandu, Nepal',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ],
           ),
-          Icon(Icons.arrow_forward_ios)
-        ],
-      ),
+        ),
+        Icon(Icons.arrow_forward_ios)
+      ],
     );
   }
 
   cartSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: Obx(
-        () => ListView.separated(
-          shrinkWrap: true,
-          itemCount: cartController.activeCart.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  cartController.activeCart[index].product.capitalize!,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${cartController.activeCart[index].brand} . ${cartController.activeCart[index].color} . ${cartController.activeCart[index].size.toStringAsFixed(1)} . Qty ${cartController.activeCart[index].quantity}',
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    Text(
-                      '\$${(cartController.activeCart[index].price * cartController.activeCart[index].quantity).toStringAsFixed(2)}',
+    return Obx(
+      () => ListView.separated(
+        shrinkWrap: true,
+        itemCount: cartController.activeCart.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            spacing: 10,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                cartController.activeCart[index].product.capitalize!,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${cartController.activeCart[index].brand} . ${cartController.activeCart[index].color} . ${cartController.activeCart[index].size.toStringAsFixed(1)} . Qty ${cartController.activeCart[index].quantity}',
                       style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w700),
+                          fontSize: 14, fontWeight: FontWeight.w400),
                     ),
-                  ],
-                ),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(
-              height: 20,
-            );
-          },
-        ),
+                  ),
+                  Text(
+                    '\$${(cartController.activeCart[index].price * cartController.activeCart[index].quantity).toStringAsFixed(2)}',
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(
+            height: 20,
+          );
+        },
       ),
     );
   }
 
   subTotalSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: Obx(
-        () => Row(
-          children: [
-            const Expanded(
-              child: Text(
-                'Sub Total',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-              ),
+    return Obx(
+      () => Row(
+        children: [
+          const Expanded(
+            child: Text(
+              'Sub Total',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             ),
-            Text(
-              '\$${(cartController.activeCartTotal.value).toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
+          ),
+          Text(
+            '\$${(cartController.activeCartTotal.value).toStringAsFixed(2)}',
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+          ),
+        ],
       ),
     );
   }
 
   shippingSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: Obx(
-        () => Row(
-          children: [
-            const Expanded(
-              child: Text(
-                'Shipping',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-              ),
+    return Obx(
+      () => Row(
+        children: [
+          const Expanded(
+            child: Text(
+              'Shipping',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             ),
-            Text(
-              '\$${(cartController.activeTotalShipping.value).toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
+          ),
+          Text(
+            '\$${(cartController.activeTotalShipping.value).toStringAsFixed(2)}',
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+          ),
+        ],
       ),
     );
   }
 
   totalOrderSection() {
-    return Container(
-      margin: const EdgeInsets.only(top: 40),
-      child: Obx(
-        () => Row(
-          children: [
-            const Expanded(
-              child: Text(
-                'Total Order',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-              ),
+    return Obx(
+      () => Row(
+        children: [
+          const Expanded(
+            child: Text(
+              'Total Order',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             ),
-            Text(
-              '\$${(cartController.activeTotalShipping.value + cartController.activeCartTotal.value).toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
+          ),
+          Text(
+            '\$${(cartController.activeTotalShipping.value + cartController.activeCartTotal.value).toStringAsFixed(2)}',
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+        ],
       ),
     );
   }

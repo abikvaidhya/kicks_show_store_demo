@@ -23,71 +23,109 @@ class _FilterScreenState extends State<FilterScreen> {
       appBar: uiUtils.customAppBar(
           title: 'Filter', centerTitled: true, showAction: false),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'assets/backgrounds/dark_green.jpg',
+              ),
+              opacity: 0.2,
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
+            spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox.shrink(),
               // brand filter
-              const Text(
-                'Brands',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Brands',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
               brandFilterSection(),
 
               // price filter
-              const Text(
-                'Price Range',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Price Range',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    priceFilterSection(),
+                  ],
+                ),
               ),
-              priceFilterSection(),
 
               // sort by filter
-              const Text(
-                'Sort By',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Sort By',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
               sortFilterSection(),
 
               // gender filter
-              const Text(
-                'Gender',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Gender',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
               genderFilterSection(),
 
               // color filter
-              const Text(
-                'Color',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Color',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
-              colorFilterSection()
+              colorFilterSection(),
+
+              const SizedBox(
+                height: 80,
+              )
             ],
           ),
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 25),
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         height: 80,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () => filterController.resetFilters(),
-                    child: Obx(
-                      () => Text(
-                        'Reset (${filterController.filterCount.value})',
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
-                      ),
+            GestureDetector(
+              onTap: () => filterController.resetFilters(),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(color: Colors.black54)),
+                height: 50,
+                width: 160,
+                child: Center(
+                  child: Obx(
+                    () => Text(
+                      'Reset (${filterController.filterCount.value})',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
             GestureDetector(
@@ -114,8 +152,8 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   Widget brandFilterSection() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+    return SizedBox(
+      // padding: const EdgeInsets.symmetric(vertical: 20),
       height: 140,
       child: Row(
         children: [
@@ -195,8 +233,8 @@ class _FilterScreenState extends State<FilterScreen> {
       filterController.activePriceMax(maxPrice);
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+    return SizedBox(
+      // padding: const EdgeInsets.symmetric(vertical: 20),
       height: 150,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,16 +294,15 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
               ),
             ),
-          )
-              ),
+          )),
         ],
       ),
     );
   }
 
   Widget sortFilterSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+    return SizedBox(
+      // margin: const EdgeInsets.symmetric(vertical: 20),
       height: 50,
       child: Obx(
         () => Row(
@@ -361,8 +398,8 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   Widget genderFilterSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+    return SizedBox(
+      // margin: const EdgeInsets.symmetric(vertical: 20),
       height: 50,
       child: Obx(
         () => Row(
@@ -458,8 +495,8 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   Widget colorFilterSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+    return SizedBox(
+      // margin: const EdgeInsets.symmetric(vertical: 20),
       height: 40,
       child: Obx(
         () => Row(

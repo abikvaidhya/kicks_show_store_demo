@@ -21,12 +21,6 @@ class CartController extends GetxController {
 
   Constants constants = Constants();
 
-  // @override
-  // onInit() {
-  //   getCartDetail();
-  //   super.onInit();
-  // }
-
   getCartDetail() async {
     try {
       activeOrderUserId(

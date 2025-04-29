@@ -1,3 +1,4 @@
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:demo_task/constants.dart';
 import 'package:demo_task/controller/filter_controller.dart';
@@ -7,20 +8,19 @@ import 'package:demo_task/model/product_review_model.dart';
 import 'package:demo_task/view/cart_screen.dart';
 import 'package:demo_task/view/dashboard_screen.dart';
 import 'package:demo_task/view/loader_helpers.dart';
+import 'package:demo_task/view/login_screen.dart';
 import 'package:demo_task/view/product_screen.dart';
 import 'package:demo_task/view/receipt_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import '../controller/cart_controller.dart';
 import '../controller/product_controller.dart';
 import '../model/brand_model.dart';
 import '../storage_helper.dart';
+import 'account_screen.dart';
 
 class UIUtils {
   ProductController productController = Get.find<ProductController>();
@@ -63,8 +63,76 @@ class UIUtils {
     );
   }
 
+  Drawer customAppDrawer() {
+    return Drawer(
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              'assets/backgrounds/blue.jpg',
+            ),
+            opacity: 0.2,
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            spacing: 10,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/images/logo.png',
+                height: 150,
+              ),
+              const Divider(),
+              const ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+              ),
+              // const Divider(
+              //   indent: 20,
+              // ),
+              ListTile(
+                leading: const Icon(Icons.shopping_bag_outlined),
+                title: const Text('Cart'),
+                onTap: () {
+                  Get.back();
+                  Get.to(() => const CartScreen());
+                },
+              ),
+              // const Divider(
+              //   indent: 20,
+              // ),
+              // const ListTile(
+              //   leading: Icon(Icons.person),
+              //   title: Text('Account'),
+              // ),
+              const Spacer(),
+              ListTile(
+                leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                    Get.to(() => const AccountScreen());
+                  },
+                  icon: const Icon(Icons.person),
+                ),
+                trailing: IconButton(
+                  onPressed: () {
+                    Get.back();
+                    Get.offAll(() => const LoginScreen());
+                  },
+                  icon: const Icon(Icons.logout),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Future selectUser() async {
-    String userId = (await storageHelper.get(key: Constants().user)).toString();
+    // String userId = (await storageHelper.get(key: Constants().user)).toString();
     return Get.bottomSheet(
         backgroundColor: Colors.white,
         Container(
@@ -726,10 +794,9 @@ class UIUtils {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
+                spacing: 10,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -737,9 +804,6 @@ class UIUtils {
                     ),
                     height: 5,
                     width: 30,
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
                   Row(
                     children: [
@@ -755,9 +819,6 @@ class UIUtils {
                           onPressed: () => Get.back(),
                           icon: const Icon(Icons.close_rounded))
                     ],
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
 
                   // quantity row
