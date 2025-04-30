@@ -1,4 +1,3 @@
-import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:demo_task/constants.dart';
 import 'package:demo_task/controller/filter_controller.dart';
@@ -22,6 +21,121 @@ import '../model/brand_model.dart';
 import '../storage_helper.dart';
 import 'account_screen.dart';
 
+// app bar
+AppBar customAppBar({
+  required String title,
+  bool centerTitled = false,
+  bool showAction = true,
+  bool showCart = true,
+}) {
+  return AppBar(
+    centerTitle: centerTitled,
+    title: Text(
+      title,
+      style: const TextStyle(fontSize: 24),
+    ),
+    actions: (showAction)
+        ? [
+            (showCart)
+                ? IconButton(
+                    icon: const Icon(Icons.shopping_bag_outlined),
+                    onPressed: () {
+                      Get.to(() => const CartScreen());
+                    },
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.receipt_long_sharp),
+                    onPressed: () {
+                      Get.to(() => const ReceiptScreen());
+                    },
+                  )
+          ]
+        : [],
+  );
+}
+
+Drawer customAppDrawer() {
+  return Drawer(
+    child: Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            'assets/backgrounds/blue.jpg',
+          ),
+          opacity: 0.2,
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: SafeArea(
+        child: Column(
+          spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 150,
+            ),
+            Row(
+              children: [
+                const Expanded(
+                  child: Divider(
+                    indent: 10,
+                    endIndent: 5,
+                  ),
+                ),
+                GestureDetector(
+                    onTap: () => Get.back(), child: const Icon(Icons.close)),
+                const SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+            const ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+            ),
+            // const Divider(
+            //   indent: 20,
+            // ),
+            ListTile(
+              leading: const Icon(Icons.shopping_bag_outlined),
+              title: const Text('Cart'),
+              onTap: () {
+                Get.back();
+                Get.to(() => const CartScreen());
+              },
+            ),
+            // const Divider(
+            //   indent: 20,
+            // ),
+            // const ListTile(
+            //   leading: Icon(Icons.person),
+            //   title: Text('Account'),
+            // ),
+            const Spacer(),
+            ListTile(
+              leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                  Get.to(() => const AccountScreen());
+                },
+                icon: const Icon(Icons.person),
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  Get.back();
+                  Get.offAll(() => const LoginScreen());
+                },
+                icon: const Icon(Icons.logout),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 class UIUtils {
   ProductController productController = Get.find<ProductController>();
   CartController cartController = Get.find<CartController>();
@@ -29,107 +143,6 @@ class UIUtils {
   ReceiptController receiptController = Get.find<ReceiptController>();
   Loaders loaders = Loaders();
   StorageHelper storageHelper = StorageHelper(); // storage helper
-
-  // app bar
-  AppBar customAppBar({
-    required String title,
-    bool centerTitled = false,
-    bool showAction = true,
-    bool showCart = true,
-  }) {
-    return AppBar(
-      centerTitle: centerTitled,
-      title: Text(
-        title,
-        style: const TextStyle(fontSize: 24),
-      ),
-      actions: (showAction)
-          ? [
-              (showCart)
-                  ? IconButton(
-                      icon: const Icon(Icons.shopping_bag_outlined),
-                      onPressed: () {
-                        Get.to(() => const CartScreen());
-                      },
-                    )
-                  : IconButton(
-                      icon: const Icon(Icons.receipt_long_sharp),
-                      onPressed: () {
-                        Get.to(() => const ReceiptScreen());
-                      },
-                    )
-            ]
-          : [],
-    );
-  }
-
-  Drawer customAppDrawer() {
-    return Drawer(
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              'assets/backgrounds/blue.jpg',
-            ),
-            opacity: 0.2,
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            spacing: 10,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Image.asset(
-                'assets/images/logo.png',
-                height: 150,
-              ),
-              const Divider(),
-              const ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Home'),
-              ),
-              // const Divider(
-              //   indent: 20,
-              // ),
-              ListTile(
-                leading: const Icon(Icons.shopping_bag_outlined),
-                title: const Text('Cart'),
-                onTap: () {
-                  Get.back();
-                  Get.to(() => const CartScreen());
-                },
-              ),
-              // const Divider(
-              //   indent: 20,
-              // ),
-              // const ListTile(
-              //   leading: Icon(Icons.person),
-              //   title: Text('Account'),
-              // ),
-              const Spacer(),
-              ListTile(
-                leading: IconButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.to(() => const AccountScreen());
-                  },
-                  icon: const Icon(Icons.person),
-                ),
-                trailing: IconButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.offAll(() => const LoginScreen());
-                  },
-                  icon: const Icon(Icons.logout),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   Future selectUser() async {
     // String userId = (await storageHelper.get(key: Constants().user)).toString();
@@ -268,9 +281,9 @@ class UIUtils {
     Brand productBrand = filterController.brands.firstWhere(
         (element) => element.name.toLowerCase() == product.brand.toLowerCase());
     return Container(
-      width: 0.5.sw,
+      width: 300,
       height: 300,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

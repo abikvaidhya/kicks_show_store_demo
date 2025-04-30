@@ -13,11 +13,13 @@ dependencies:
 
 
   cupertino_icons:
+  animations: 
 
   #  firebase
   firebase_core:
   firebase_storage:
   firebase_cloud_firestore:
+  firebase_auth:
 
   #  state management
   get:

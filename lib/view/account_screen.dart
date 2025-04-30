@@ -16,7 +16,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: uiUtils.customAppBar(title: 'Profile', showAction: false),
+        appBar: customAppBar(title: 'Profile', showAction: false),
         body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(

@@ -39,8 +39,7 @@ class _ProductScreenState extends State<ProductScreen> {
     return Obx(
       () => Scaffold(
         extendBody: true,
-        appBar:
-            uiUtils.customAppBar(title: '', showAction: widget.fromDashboard),
+        appBar: customAppBar(title: '', showAction: widget.fromDashboard),
         body: SingleChildScrollView(
           child: Container(
             decoration: const BoxDecoration(
@@ -55,16 +54,17 @@ class _ProductScreenState extends State<ProductScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
               spacing: 20,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox.shrink(),
                     // product image
                     Center(
                       child: SizedBox(
-                        height: 0.4.sh,
-                        width: 0.8.sw,
+                        height: 300,
+                        width: 300,
                         child: Stack(
                           children: [
                             PageView.builder(
@@ -82,17 +82,15 @@ class _ProductScreenState extends State<ProductScreen> {
                                 });
                               },
                               itemBuilder: (BuildContext context, int index) {
-                                return Center(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: uiUtils.cachedImage(
-                                        url: productController
-                                            .currentProduct!
-                                            .value
-                                            .attribute[productController
-                                                .activeProductAttributeIndex
-                                                .value]
-                                            .image[index]),
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: uiUtils.cachedImage(
+                                    url: productController
+                                        .currentProduct!
+                                        .value
+                                        .attribute[productController
+                                            .activeProductAttributeIndex.value]
+                                        .image[index],
                                   ),
                                 );
                               },
@@ -254,7 +252,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                     // product rating and review
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      spacing: 5,
                       children: [
                         SizedBox(
                           height: 10,
@@ -271,9 +269,6 @@ class _ProductScreenState extends State<ProductScreen> {
                             },
                           ),
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
                         Text(
                           productController.currentProduct!.value.rating
                               .toStringAsFixed(1),
@@ -281,9 +276,6 @@ class _ProductScreenState extends State<ProductScreen> {
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 5,
                         ),
                         Text(
                           '${productController.currentProduct!.value.reviews} Review(s)',
@@ -300,6 +292,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                 // size row
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 5,
                   children: [
                     const Text(
@@ -380,6 +373,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                 // product description
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 10,
                   children: [
                     const Text(

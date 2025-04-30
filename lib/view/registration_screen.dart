@@ -9,13 +9,12 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  UIUtils uiUtils = UIUtils();
   GlobalKey formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: uiUtils.customAppBar(title: 'Create Account', showAction: false),
+      appBar: customAppBar(title: 'Create Account', showAction: false),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -82,7 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
       bottomNavigationBar: GestureDetector(
         child: Container(
-          height: 60,
+          height: 50,
           decoration: const BoxDecoration(
             color: Colors.deepPurple,
             borderRadius: BorderRadius.only(

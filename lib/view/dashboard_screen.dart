@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:demo_task/constants.dart';
 import 'package:demo_task/controller/cart_controller.dart';
 import 'package:demo_task/controller/filter_controller.dart';
@@ -58,8 +59,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: uiUtils.customAppDrawer(),
-      appBar: uiUtils.customAppBar(title: 'Discover', showAction: false),
+      endDrawer: customAppDrawer(),
+      appBar: customAppBar(title: 'Discover', showAction: false),
       body: RefreshIndicator(
         onRefresh: () async {
           filterController.resetFilters();
@@ -182,25 +183,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () {
-            productController.setCurrentProduct(
-                product: (filterController.filteredProducts.isNotEmpty)
-                    ? filterController.filteredProducts[index]
-                    : productController.products[index]);
-
-            Get.to(() => const ProductScreen());
-          },
-          child: uiUtils.product(
-              product: (filterController.filteredProducts.isNotEmpty)
-                  ? filterController.filteredProducts[index]
-                  : productController.products[index]),
+        return Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: OpenContainer(
+            closedShape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            closedBuilder: (BuildContext context, void Function() action) =>
+                uiUtils.product(
+                    product: (filterController.filteredProducts.isNotEmpty)
+                        ? filterController.filteredProducts[index]
+                        : productController.products[index]),
+            openBuilder: (BuildContext context,
+                void Function({Object? returnValue}) action) {
+              productController.setCurrentProduct(
+                  product: (filterController.filteredProducts.isNotEmpty)
+                      ? filterController.filteredProducts[index]
+                      : productController.products[index]);
+              return const ProductScreen();
+            },
+          ),
         );
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          // crossAxisSpacing: 2,
-          mainAxisSpacing: 15),
+        crossAxisCount: 2,
+      ),
     );
   }
 }

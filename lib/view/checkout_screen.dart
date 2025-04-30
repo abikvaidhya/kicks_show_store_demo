@@ -24,7 +24,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      appBar: uiUtils.customAppBar(
+      appBar: customAppBar(
           title: 'Order Summary', centerTitled: true, showAction: false),
       body: Container(
         decoration: const BoxDecoration(

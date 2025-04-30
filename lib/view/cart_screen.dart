@@ -29,7 +29,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: uiUtils.customAppBar(
+        appBar: customAppBar(
             title: 'Cart',
             centerTitled: true,
             showAction: true,

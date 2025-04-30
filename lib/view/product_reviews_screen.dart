@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import '../controller/product_controller.dart';
 import '../controller/receipt_controller.dart';
 import 'ui_helpers.dart';
@@ -29,7 +27,7 @@ class _ProductReviewsScreeState extends State<ProductReviewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: uiUtils.customAppBar(
+        appBar: customAppBar(
             centerTitled: true,
             title:
                 'Reviews (${productController.currentProduct!.value.reviews})',

@@ -27,7 +27,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: uiUtils.customAppBar(
+        appBar: customAppBar(
             title: 'Receipts', showAction: false, centerTitled: true),
         body: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),

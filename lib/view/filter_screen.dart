@@ -20,7 +20,7 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: uiUtils.customAppBar(
+      appBar: customAppBar(
           title: 'Filter', centerTitled: true, showAction: false),
       body: SingleChildScrollView(
         child: Container(
